@@ -5,6 +5,15 @@ https://www.youtube.com/watch?v=2zjoKjt97vQ&list=PLRx0vPvlEmdAghTr5mXQxGpHjWqSz0
 
 
 
+## [2024 코딩테스트 스터디] 2024.12.10 ~
+
+#### 목표
+
+1. 매일 1일 1코테를 진행하기
+2. 내가 푼 코드 복습하면서 잊지 않도록 노력하기 
+
+
+
 ## 코딩테스트
 
 * 출력이 십만개 이상인 경우 bw를 이용해 관리하기!
