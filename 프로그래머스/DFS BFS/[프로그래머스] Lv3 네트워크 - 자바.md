@@ -7,7 +7,7 @@ https://school.programmers.co.kr/learn/courses/30/lessons/43162
 ### **문제 풀이 흐름**
 
 1. DFS 를 활용 (or bfs 를 활용하여 각 queue 마다 방문시키기. 내일 풀어보자)
-2. 
+2. BFS 활용
 
 
 
@@ -54,3 +54,43 @@ public class p43162 {
 
 }
 ```
+
+```java
+import java.util.*;
+
+class Solution {
+    public int solution(int n, int[][] computers) {
+        
+        int answer = 0;
+        boolean[] visited = new boolean[computers.length];
+
+        for (int i = 0; i < computers.length; i++) {
+            if (!visited[i]) {
+                bfs(computers, i, visited);
+                answer++;
+            }
+        }
+        return answer;
+    }
+    
+    public static void bfs(int[][] computers, int start, boolean[] visited) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(start);
+        visited[start] = true;
+
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+
+            for (int j = 0; j < computers.length; j++) {
+                if (cur != j && computers[cur][j] == 1 && !visited[j]) {
+                    visited[j] = true;
+                    queue.offer(j);
+                }
+            }
+        }
+    }
+    
+   
+}
+```
+
