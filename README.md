@@ -310,5 +310,58 @@ class Node{
 - 시간 복잡도
   - 연결관계(가중치) 조회/저장: `O(Outdegree(V))` (단일)
   - 정점에 연결된 모든 간선 조회: `O(Outdegree(V))` (모든 간선)
-  =======
->>>>>>> db659c5c0cd51b51d46cb12bc6eb4c9d10edbe87
+
+
+
+### Queue
+
+- 뒤에 원소를 삽입하고, 앞에 원소를 제거할 수 있는 Queue
+  - Queue<Integer> q = new LinkedList<>();
+  - `add()`: 원소를 큐에 추가, 큐에 공간이 없다면 Exception 발생
+  - `offer()`: 원소를 큐에 추가, 큐에 공간이 없다면 false 반환
+  - `remove()`: 큐의 head 원소를 제거하고 반환, 큐가 비었다면 Exception 발생
+  - `poll()`: 큐의 head 원소를 제거하고 반환. 큐가 비없다면 null 반환
+  - `element()`: 큐의 head 원소 반환, 큐가 비없다면 Exception 발생
+  - `peek()`: 큐의 head 원소 반환, 큐가 비었다면 null 반환
+  - 선언: Queue<Integer> q = new LinkedList<>();
+
+### Deque
+
+- 양쪽 끝에 원소를 삽입/제거할 수 있는 양방향 Queue
+- Deque<Integer> s = new LinkedList<>();
+- `offerFirst()`: 원소를 head 에 추가
+- `offerLast()`: 원소를 마지막에 추가
+- `pollFirst()`: 큐의 head 제거하고 반환
+- `pollLast()`: 큐의 마지막 제거하고 반환
+- `peekFirst()`: 큐의 head 원소 반환
+- `peekLast()`: 큐의 마지막 원소 반환
+
+### Stack
+
+- 마지막에 넣은 데이터가 먼저 나오는 후입선출 자료구조(Last-In First-Out)
+- Deque<Integer> s = new ArrayDeque<>();
+  - LinkedList 와 ArrayDeque 차이점
+    - **성능**: `ArrayDeque`는 대부분의 경우에서 더 빠른 성능을 제공. 특히, 삽입 및 삭제가 빈번하게 일어날 때와 순차 접근이 필요할 때 유리.
+    - **메모리 사용**: `ArrayDeque`는 메모리를 더 효율적으로 사용할 수 있음.
+    - **특정 상황에서의 유용성**: `LinkedList`는 삽입과 삭제가 리스트의 중간에서 자주 일어나는 경우 유리. 그러나 `ArrayDeque`는 일반적인 스택과 큐 작업에서 더 나은 성능을 제공.
+- `offerFirst()`: 원소를 head 에 추가
+- `pollFirst()`: 큐의 head 제거하고 반환
+- `peekFirst()`: 큐의 head 원소 반환 • Stack 은 앞쪽에서 연산이 일어날 수 있기 때문에 보다 직관적인 First 메소드 사용!
+
+
+
+### BFS 와 DFS
+
+**BFS (Breadth-First Search)**
+
+- 넓이 우선 탐색
+- `Queue` 를 이용하여 구현
+- 탐색할 정점을 Queue 에 넣고
+- **처음 방문하는 정점이 `큐에서 빠질때` 마다**
+
+**DFS (Depth-First Search)**
+
+- 깊이 우선 탐색
+- `스택` or `재귀함수` 로 구현
+- **처음 방문하는 정점이 `재귀에 진입`할 때 마다**
+
