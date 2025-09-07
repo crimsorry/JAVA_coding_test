@@ -137,3 +137,99 @@ public class P_1844 {
     }
 ```
 
+### BFS 풀이
+
+* 층별로 Queue 에 노드를 넣어 최단 거리 탐색하기!
+
+* **먼저 들어온 queue 는 가장 최단 거리로 들어온 node** 이므로 두번째, 세번째 들어온 node 보다 거리가 짧을 수 없음!
+
+  * 따라서 방문처리 시키고 빽트래킹 하지 않아도 된다.
+
+    `if(maps[goX][goY) == 1 && !visited[goX][goY]){`
+
+    ​	`visited[goX][goY] = true;` 방문처리!
+
+    ```
+     1  #  9 10 11
+     2  #  8  # 12
+     3  #  7  8  9
+     4  5  6  # 10
+     #  #  #  # 11
+    ```
+
+    
+
+![img](https://postfiles.pstatic.net/MjAyNTA5MjNfOTgg/MDAxNzU4NjExOTIxMjIx.Bn6-BiNHrEXGzwq8ZzTiC_FQsj4IILksd7hUb_-0LKMg.1FKh3FqjRhLe2U3oVJ2TmceuBtH0OswSz4tJkJ6YLoIg.PNG/image.png?type=w773)
+
+```java
+package programmers;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class P_1844 {
+
+    private static int n;
+    private static int m;
+    private static int[] distanceX = {0, 1, 0, -1};
+    private static int[] distanceY = {1, 0, -1, 0};
+    private static int answer;
+
+    public static class NodeB {
+        private int x;
+        private int y;
+        private int distance;
+
+        public NodeB(int x, int y, int distance){
+            this.x = x;
+            this.y = y;
+            this.distance = distance;
+        }
+    }
+
+    public static int solution(int[][] maps){
+        answer = -1;
+        n = maps.length;
+        m = maps[n-1].length;
+
+        return bfs(maps);
+    }
+
+    // bfs: 층별로 Queue 에 노드를 넣어서 최단 거리 탐색하기
+    public static int bfs(int[][] maps){
+        Queue<NodeB> queue = new LinkedList<NodeB>();
+        queue.offer(new NodeB(0, 0, 1));
+        boolean[][] visited = new boolean[n][m];
+        visited[0][0] = true;
+
+        while(!queue.isEmpty()){
+            NodeB nodeB = queue.poll();
+
+            if(nodeB.x == n-1 && nodeB.y == m-1){
+                return nodeB.distance;
+            }
+
+            for(int i=0; i<4; i++){
+                int goX = nodeB.x + distanceX[i];
+                int goY = nodeB.y + distanceY[i];
+                if(goX >=0 && goY >=0 && goX < n && goY < m ){
+                    if(maps[goX][goY] == 1 && !visited[goX][goY]){
+                        visited[goX][goY] = true; // 최단거리를 위해 백트래킹 X
+                        queue.offer(new NodeB(goX, goY, nodeB.distance+1));
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+    public static void main(String[] args) {
+//        int[][] maps = {{1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,1},{0,0,0,0,1}};
+        int[][] maps = {{1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,0},{0,0,0,0,1}};
+
+        System.out.println(solution(maps));
+    }
+
+}
+
+```
+
