@@ -161,3 +161,74 @@ class Solution {
 }
 ```
 
+### 세번째 풀이
+
+* **DFS** 로 풀면 더 시간이 오래걸릴 것이라 예상하고 풀었으나...
+
+* 예상과 달리 속도가 `10배 이상 개선` 된 것으로 확인. 메모리도 더 효율적....
+
+  ![img](https://postfiles.pstatic.net/MjAyNTA5MjRfMzIg/MDAxNzU4Njk1Nzk0NjM4.-SwNHjfZqsL7e_bXjBq9VuKhSc880NCmcLpEeZcTSdQg.7-FgZXWbgdQaMvZSjelfUzkqFX1IbhQ5gDYCYb30DwMg.PNG/image.png?type=w773)
+
+**WHY???**
+
+> 모든 문제를 풀때 BFS 가 가장 빠르지 않다!
+
+**현재 문제 상황:**
+
+* 3 <= words <= 50
+* 3 <= word.len <= 10
+
+-> 크기와 길이 모두 작음!
+
+BFS 를 이용해 Queue 에 넣는 경우 메모리/연산에서 낭비가 발생 할 수 있다
+
+**결론:**
+
+> **BFS: 크기가 크고, 최단 거리 뽑을때 유용**
+> **DFS: 크기가 작은 경우 유리**
+
+```java
+import java.util.*;
+
+class Solution {
+    
+    public static int n;
+    public static int answer;
+    
+    public static int solution(String begin, String target, String[] words){
+        n = begin.length();
+        boolean[] visited = new boolean[words.length];
+        answer = 0;
+        dfs(begin, target, words, 0, visited);
+        return answer;
+    }
+
+    public static void dfs(String begin, String target, String[] words, int chk, boolean[] visited){
+        if(begin.equals(target)){
+            if(answer == 0){
+                answer = chk;
+            } else{
+                answer = Math.min(answer, chk);
+            }
+        }
+
+        for(int i=0; i<words.length; i++){
+            if(visited[i]) continue;
+
+            int same = 0;
+            for(int j=0; j<n; j++){
+                if(begin.charAt(j) == words[i].charAt(j)){
+                    same++;
+                }
+            }
+
+            if(same != n-1) continue;
+
+            visited[i] = true;
+            dfs(words[i], target, words, chk+1, visited);
+            visited[i] = false; // 백트래킹!
+        }
+    }
+}
+```
+
