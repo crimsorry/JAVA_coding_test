@@ -15,10 +15,6 @@ https://school.programmers.co.kr/learn/courses/30/lessons/43164
 
 
 
-### **문제상황**
-
-### **주요 포인트**
-
 ### **내 코드**
 
 * DFS 풀이
@@ -70,7 +66,66 @@ class Solution {
 }
 ```
 
-### 
+### 두번째 풀이 
+
+* 다음으로 **BFS** 를 통해 풀이를 이어나갔다.
+* 첫번째로 고려한 점은 사전순 정렬을 통해 넓이 탐색을 가능하게끔 하자 였다.
+* 두번째로 고려한 점은 visited 였다. 처음에는 Node 에 route, cnt 를 둬서 각 route 의 횟수를 더하는 방식으로 최적의 경우를 구하려 하였지만 `tickets[i][0]` 이 같은 경우, 방문을 하지 못하는 문제점이 발생하였다.
+* 따라서 Node 에 visited[] 역시 변수로 선언하여 푼 결과 답을 구할 수 있었다.
+* 역시나 처음 예상했던 것 과 같이 DFS 보다 성능이 떨어지는 결과가 나타났다.
+
+![img](https://postfiles.pstatic.net/MjAyNTA5MjVfMjQ0/MDAxNzU4ODA0NDU5Mjgy.17CTr_XZzBLN4W1hgcdZYhsrXmhL_yP11YP1pg_37Jkg.9TbD2V-uYzy4FKunLjfap7CP_NUJgkG-qwBt80RQLlQg.PNG/image.png?type=w773)
+
+```java
+import java.util.*;
+
+class Solution {
+    
+    public static String[] solution(String[][] tickets){
+        Arrays.sort(tickets, Comparator.comparing(a -> a[1]));
+        return bfs(tickets);
+    }
+
+    public static String[] bfs(String[][] tickets){
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(new Node(new ArrayList<>(List.of("ICN")), new boolean[tickets.length]));
+
+        while(!queue.isEmpty()){
+            Node cur = queue.poll();
+
+            if(cur.route.size() == tickets.length + 1){
+                return cur.route.toArray(new String[0]);
+            }
+
+            for(int i=0; i<tickets.length; i++){
+                if(!cur.visited[i] && tickets[i][0].equals(cur.route.get(cur.route.size()-1))){
+                    boolean[] newVisited = cur.visited.clone(); // 복사
+                    newVisited[i] = true;
+
+                    ArrayList<String> newRoute = new ArrayList<>(cur.route);
+                    newRoute.add(tickets[i][1]);
+
+                    queue.offer(new Node(newRoute, newVisited));
+                }
+            }
+        }
+        return new String[0];
+    }
+    
+    static class Node {
+        ArrayList<String> route; 
+        boolean[] visited;       
+
+        public Node(ArrayList<String> route, boolean[] visited) {
+            this.route = route;
+            this.visited = visited;
+        }
+    }
+
+}
+```
+
+
 
 
 
