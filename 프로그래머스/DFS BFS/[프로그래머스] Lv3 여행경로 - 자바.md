@@ -127,6 +127,65 @@ class Solution {
 
 
 
+### 궁금증!
+
+BFS 로 문제를 풀다가 Node 클래스를 가장 상단에 두어 성능테스트를 돌려보았다. 
+
+```java
+class Solution {
+
+    static class Node {
+        ArrayList<String> route; 
+        boolean[] visited;       
+
+        ...
+    }
+    
+    public static String[] solution(String[][] tickets){
+        ...
+    }
+
+}
+```
 
 
-### 
+
+당연히 같은 결과가 나올 것이라 생각하며 결과를 기다리는데...
+
+
+
+![img](https://postfiles.pstatic.net/MjAyNTA5MjVfMjk1/MDAxNzU4ODA0NDI0Mzc3._Qhz4zyXKhnlIoq-xFSIl8DsckcvqBCYIVbURReOjQwg.CmrCHzh4utsJaFbYxAmLv2PA6yEocFnUaMZf-DD7GO0g.PNG/image.png?type=w773)
+
+
+
+Node 클래스를 아래에 두었을때 보다 시간, 메모리가 증가하는 결과가 나왔다!
+
+
+
+이 결과는 **Node 클래스 위치 자체 때문이 아니라**, JVM 내부 동작과 최적화 타이밍 때문에 발생하는 것으로 보인다.
+
+1. **클래스 로딩(Class Loading)**
+   - JVM은 클래스를 처음 참조할 때 로딩 및 초기화를 수행
+   - `Node`의 위치가 달라지면 참조 시점이나 최적화 타이밍이 미묘하게 달라질 수 있음
+2. **JIT 컴파일러 최적화**
+   - JVM은 처음에는 인터프리터로 코드를 실행하고, 반복 실행되는 메서드를 JIT으로 컴파일
+   - `Node` 객체 생성이 BFS 루프에서 매우 자주 발생하기 때문에, 언제 JIT 최적화가 적용되는지에 따라 실행 시간이 달라질 수 있음
+3. **Escape Analysis**
+   - JIT은 객체가 메서드 내부에서만 사용되면 스택에 할당하는 최적화를 적용할 수 있다.
+   - `Node` 사용 패턴에 따라 이 최적화가 적용되거나 적용되지 않을 수 있으며, 미세한 성능 차이를 만들 수 있음
+
+
+
+그래서 결론은??
+
+- **Node 선언 위치가 본질적으로 성능에 영향을 주는 것은 아님**
+- 실행 시간 차이는 JVM 최적화 타이밍 및 서버 환경(부하, 캐시, JIT warm-up 등)에 따른 **측정 노이즈**!!!
+- 즉, 코드 구조보다 **실행 환경 요인**이 큼!
+
+------
+
+## 참고 자료
+
+- [How the JIT compiler boosts Java performance in OpenJDK (Red Hat)](https://developers.redhat.com/articles/2021/06/23/how-jit-compiler-boosts-java-performance-openjdk?utm_source=chatgpt.com)
+- [Tiered Compilation in JVM (Baeldung)](https://www.baeldung.com/jvm-tiered-compilation?utm_source=chatgpt.com)
+- [Java Class Loading – Performance Impact (Reddit)](https://www.reddit.com/r/java/comments/wvl7yh/java_class_loading_performance_impact/?utm_source=chatgpt.com)
