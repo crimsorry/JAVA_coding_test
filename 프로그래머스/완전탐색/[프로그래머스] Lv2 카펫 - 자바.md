@@ -46,3 +46,30 @@ class Solution {
 }
 ```
 
+### 두번째 풀이
+
+* 코드 효율성을 높이기 위해 수정
+* brown 사이에 yellow 가 1줄 들어가게 때문에 height 가 3 이상 이여야 한다.
+
+![img](https://postfiles.pstatic.net/MjAyNTA5MjlfMTQy/MDAxNzU5MTM0MDA3NDY2.s_ow38C91L-fEI2vH9AzuQwgajks7s6L6esoHQg232wg.H8ZP6xHNhOndaP8wEd1PR0JPwu1j-HYPhN9UT28L6SQg.PNG/image.png?type=w773)
+
+```java
+class Solution {
+    public static int[] solution(int brown, int yellow){
+
+        int total = brown + yellow;
+
+        for(int height=3; height<=total; height++){
+            if(total % height == 0){
+                int width = total / height;
+                if(width >= height && yellow == (width-2) * (height-2)){
+                    return new int[]{width, height};
+                }
+            }
+        }
+
+        return new int[2];
+    }
+}
+```
+
