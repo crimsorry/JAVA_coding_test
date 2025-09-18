@@ -45,4 +45,50 @@ class Solution {
 }
 ```
 
-### 
+### 두번째 풀이
+
+* **에라토스테네스의 체** 를 더욱 효율적으로 풀기
+
+* 왜 `i * i <= n` 까지만 볼까?
+
+* 어떤 수의 합성수 중 가장 작은 값들의 집합은 늘 √n 이하다.
+
+  > 합성수:  **“두 수의 곱”**
+  >
+  > 36 = 2 × 18
+  >
+  > 36 = 3 × 12
+  >
+  > 36 = 4 × 9
+  >
+  > 36 = 6 × 6
+  >
+  > 작은 수의 집합은 √36 = 6 이하!
+
+* 이를 Java 에서는 i * i <= n 로 표현!
+
+![img](https://postfiles.pstatic.net/MjAyNTEwMDFfMjUg/MDAxNzU5MzIyMDU5ODk4.lOO0FE80XDVkqVjoPRuzoOwt2_Z9uZG8fI2yNgYxIIgg.7jiIUyX7n6yze5BAH43z_yhFQt1Pus9_2cgUx0YTdFYg.PNG/image.png?type=w773)
+
+```java
+class Solution {
+    public static int solution(int n){
+        int answer = 0;
+        boolean[] visited = new boolean[n+1];
+
+        for (int i = 2; i * i <= n; i++) {
+            if (!visited[i]) {
+                for (int j = i * i; j <= n; j += i) {
+                    visited[j] = true;
+                }
+            }
+        }
+
+        for (int i = 2; i <= n; i++) {
+            if (!visited[i]) answer++;
+        }
+
+        return answer;
+    }
+}
+```
+
