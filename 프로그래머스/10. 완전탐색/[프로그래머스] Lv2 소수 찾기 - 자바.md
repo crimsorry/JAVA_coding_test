@@ -69,3 +69,61 @@ class Solution {
 }
 ```
 
+### 두번째 풀이
+
+* 에라토스테네스의 체 에는 두가지 풀이 방법 존재
+  1. 첫번째 풀이와 같이 배열을 지정해 모든 소수 구하기
+  2. 개별 소수 구하기
+* 해당 문제의 경우 최악의 경우 visited 배열의 크기가 7자리 이상이 될 수 도 있음. 메모리 및 속도 증가!
+* 따라서 개별 소수 구하는 방법을 통해 속도를 줄여나가기로 함
+* 또한 **HashSet** 을 사용하여 시간복잡도 줄임
+* 결과적으로 **성능 3배 이상 증가!**
+
+![img](https://postfiles.pstatic.net/MjAyNTEwMDJfMjk5/MDAxNzU5MzMxMTM5NzYy.SO1vV8X2Tj7ieENzgZZf4o7DDYyc1nY5Fl7dp7cDDkUg.X7R-xgbE16N3Z735fy4SzD_RBHFxpCJqDt08dgKp6Tkg.PNG/image.png?type=w773)
+
+```java
+import java.util.*;
+
+class Solution {
+    
+    public static HashSet<Integer> hashSet = new HashSet<Integer>();
+
+    public static int solution(String numbers){
+        int cnt = 0;
+        String[] nums = numbers.split("");
+
+        dfs(nums, new boolean[nums.length+1], "");
+
+        for(Integer num : hashSet){
+            if(isPrime(num)) cnt++;
+        }
+
+        return cnt;
+    }
+
+    public static void dfs(String[] nums, boolean[] visited, String num){
+        if(!num.isEmpty()){
+            hashSet.add(Integer.parseInt(num));
+        }
+
+        for(int i=0; i<nums.length; i++){
+            if(!visited[i]){
+                visited[i] = true;
+                dfs(nums, visited, num + nums[i]);
+                visited[i] = false;
+            }
+        }
+    }
+
+    public static boolean isPrime(int num){
+        if(num < 2) return false;
+        if(num == 2) return true;
+        if(num % 2 == 0) return false;
+        for(int i=3; i*i<=num; i+=2){
+            if(num % i == 0) return false;
+        }
+        return true;
+    }
+}
+```
+
