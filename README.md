@@ -150,6 +150,11 @@ public static int getMaxInArray(int[] arr) {
   - **시간복잡도: O(1)**
   - 해시 테이블을 기반으로 한 unordered Collection
   - 삽입/삭제/조회 연산 : O(1) 기대. null 저장 가능
+- **LinkedHashSet**
+  - **시간복잡도: O(1)** (HashSet과 거의 동일)
+  - 순서 O
+  - 해시 테이블 + 이중 연결 리스트 구조
+  - `add`, `contains`, `remove` → O(1) (HashSet과 거의 동일)
 - **TreeSet**
   - **시간복잡도: O(logn)**
   - Binary Search Tree 를 기반으로 한 ordered Collection.
@@ -324,6 +329,17 @@ class Node{
   - `element()`: 큐의 head 원소 반환, 큐가 비없다면 Exception 발생
   - `peek()`: 큐의 head 원소 반환, 큐가 비었다면 null 반환
   - 선언: Queue<Integer> q = new LinkedList<>();
+  
+  ```
+  offer > 1
+  offer > 1, 2
+  offer > 1, 2, 3
+  
+  pull > 2, 3
+  pull > 3
+  ```
+  
+  
 
 ### Deque
 
@@ -336,6 +352,24 @@ class Node{
 - `peekFirst()`: 큐의 head 원소 반환
 - `peekLast()`: 큐의 마지막 원소 반환
 
+```
+offerFirst > 1
+offerFirst > 2, 1
+offerFirst > 3, 2, 1
+
+pullFirst > 2, 1
+pullFirst > 1
+
+offerLast > 1
+offerLast > 1, 2
+offerLast > 1, 2, 3
+
+pullLast > 1, 2
+pullLast > 1
+```
+
+
+
 ### Stack
 
 - 마지막에 넣은 데이터가 먼저 나오는 후입선출 자료구조(Last-In First-Out)
@@ -347,6 +381,17 @@ class Node{
 - `offerFirst()`: 원소를 head 에 추가
 - `pollFirst()`: 큐의 head 제거하고 반환
 - `peekFirst()`: 큐의 head 원소 반환 • Stack 은 앞쪽에서 연산이 일어날 수 있기 때문에 보다 직관적인 First 메소드 사용!
+
+```
+offerFirst > 1
+offerFitst > 2, 1
+offerFirst > 3, 2, 1
+
+pullFirst > 2, 1
+pullFirst > 1
+```
+
+
 
 
 
@@ -365,3 +410,14 @@ class Node{
 - `스택` or `재귀함수` 로 구현
 - **처음 방문하는 정점이 `재귀에 진입`할 때 마다**
 
+
+
+### 에라토스테네스의 체
+
+소수 찾는 효율적인 방법
+
+1. 1은 소수가 아니므로 제외
+2. 가장 작은 소수 2 선택 후 2의 배수 지우기
+3. 다음으로 작은 소수 3 선택 후 3의 배수 지우기
+4. 그 다음 남아있는 작은 수(5) 선택 후 5의 배수 지우기
+5. 이렇게 반복하면 남아있는 수는 모두 소수!
