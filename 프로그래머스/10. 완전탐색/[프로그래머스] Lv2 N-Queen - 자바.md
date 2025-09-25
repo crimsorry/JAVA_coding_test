@@ -51,3 +51,51 @@ public class P_12952 {
 
 ```
 
+### 두번째 풀이
+
+* true 처리할 영역을 각 배열로 선언!
+
+  * 열 = 0, 1, 2, 3 ...
+  * 좌상, 우하 대각선 = 0,0 1,1 2,2 ... row - col = 0 (모든 값이 0 이므로 구분을 위해  n - 1
+  * 좌하, 우상 대각선 = 0,2 1,1 2,0 ... row + col = row * 2
+
+  ![img](https://postfiles.pstatic.net/MjAyNTEwMDJfMjM4/MDAxNzU5NDEzNjc1Mjg4.09ICVxDARQc8ZKT0n4kG3ll_8SE4e87xKruSE3bcf_Eg.JiGIVNRnIJqtwqt8YtTq2fM--QBOMEbelROaYyCcNjsg.PNG/image.png?type=w773)
+
+```java
+class Solution {
+    static int answer;
+    static boolean[] digit1;
+    static boolean[] digit2;
+    static boolean[] digit3;
+
+    public static int solution(int n) {
+        answer = 0;
+        digit1 = new boolean[n]; // 열 = 0, 1, 2, 3 ...
+        digit2 = new boolean[2*n]; // 좌상, 우하 대각선 = 0,0 1,1 2,2 ... row - col = 0 (모든 값이 0 이므로 구분을 위해  n - 1
+        digit3 = new boolean[2*n]; // 좌하, 우상 대각선 = 0,2 1,1 2,0 ... row + col = row * 2
+
+        dfs(0, n);
+        
+        return answer;
+    }
+
+    public static void dfs(int row, int n){
+        if(row == n){
+            answer++;
+            return;
+        }
+
+        for(int col=0; col<n; col++){
+            if(digit1[col] || digit2[row - col + n - 1] || digit3[row + col]) continue;
+
+            digit1[col] = digit2[row - col + n - 1] = digit3[row + col] = true;
+
+            dfs(row+1, n);
+
+            // 백트랙킹
+            digit1[col] = digit2[row - col + n - 1] = digit3[row + col] = false; 
+        }
+    }
+}
+```
+
