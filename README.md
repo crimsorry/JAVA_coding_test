@@ -380,7 +380,10 @@ pullLast > 1
     - **특정 상황에서의 유용성**: `LinkedList`는 삽입과 삭제가 리스트의 중간에서 자주 일어나는 경우 유리. 그러나 `ArrayDeque`는 일반적인 스택과 큐 작업에서 더 나은 성능을 제공.
 - `offerFirst()`: 원소를 head 에 추가
 - `pollFirst()`: 큐의 head 제거하고 반환
-- `peekFirst()`: 큐의 head 원소 반환 • Stack 은 앞쪽에서 연산이 일어날 수 있기 때문에 보다 직관적인 First 메소드 사용!
+- `peekFirst()`: 큐의 head 원소 반환
+  -  Stack 은 앞쪽에서 연산이 일어날 수 있기 때문에 보다 직관적인 First 메소드 사용!
+
+- 단일 스레드 환경에서 훨씬 빠름!
 
 ```
 offerFirst > 1
@@ -391,7 +394,18 @@ pullFirst > 2, 1
 pullFirst > 1
 ```
 
+* Stack<Integer> stack = new Stack<>();
 
+  - `push(E item)` : top에 원소 추가
+
+  - `pop()` : top 원소 꺼내서 반환 + 제거
+
+  - `peek()` : top 원소 반환 (제거 ❌)
+
+  - `empty()` : 비었는지 확인
+
+  - 레거시. Stack 보다 Deque 가 성능 up
+    - 자바 공식 문서에서도 `Deque` 쓰라고 명시 https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Stack.html
 
 
 
