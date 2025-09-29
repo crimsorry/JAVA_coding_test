@@ -339,7 +339,49 @@ class Node{
   pull > 3
   ```
   
+  - 우선순위 큐.
   
+  - 우선순위가 가장 높은 값이 먼저 나오는 큐
+  
+    - PriorityQueue<Integer> pq = new PriorityQueue<>();
+      - 작은 값이 먼저 나옴
+  
+    - PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+      - 큰 값 먼저 나옴
+  
+  - `offer()` → 값 추가 (push 와 비슷). `O(log N)`
+  
+  - `poll()` → 우선순위가 가장 높은 값 꺼내고 제거. `O(log N)`
+  
+  - `peek()` → 가장 높은 값 확인만 (제거는 안 함). `O(1)`
+  
+    ```python
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    
+    # 작은 값이 앞에
+    offer > 1
+    offer > 1, 2
+    offer > 1, 2, 3
+    
+    # 작은 값 부터 삭제
+    pull > 2, 3
+    pull > 3
+    ```
+  
+    ```python
+    PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+    
+    # 큰 값이 앞에
+    offer > 1
+    offer > 2, 1
+    offer > 3, 2, 1
+    
+    # 큰 값 부터 삭제
+    pull > 2, 1
+    pull > 1
+    ```
+
+
 
 ### Deque
 
