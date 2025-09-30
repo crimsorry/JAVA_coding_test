@@ -54,5 +54,44 @@ class Solution {
 }
 ```
 
+### 두번째 풀이
 
+* **우선순위 큐** 사용!
+
+* Queue 에 {원 순번, 프로세스} 를 넣고, PriorityQueue 에 내림차순 프로세스 넣기!
+
+  ![img](https://postfiles.pstatic.net/MjAyNTEwMDRfMTcx/MDAxNzU5NTA2Mzk3NjIw.VeBmU73lKcElU0YFp_qhZabAXtpkPoyV9ABApemu8ZMg.5dCImV99yK7lmnBHbD2i6yd0u2AtWmSTimhdFjXt2ygg.PNG/image.png?type=w773)
+
+```java
+import java.util.*;
+
+class Solution {
+   public static int solution(int[] priorities, int location){
+        int cnt = 0;
+
+        Queue<int[]> q = new LinkedList<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+        for(int i=0; i<priorities.length; i++){
+            q.offer(new int[]{i, priorities[i]});
+            pq.offer(priorities[i]);
+        }
+
+        while(!q.isEmpty()){
+            int[] process = q.poll();
+            int max = pq.poll();
+
+            if(process[1] == max){
+                cnt++;
+                if(process[0] == location) break;
+            }else{
+                q.offer(process);
+                pq.offer(max);
+            }
+        }
+        return cnt;
+    }
+    
+}
+```
 
