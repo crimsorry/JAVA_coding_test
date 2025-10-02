@@ -53,3 +53,43 @@ class Solution {
 }
 ```
 
+### 두번째 플이
+
+* for 문을 이용한 풀이!
+
+  ![img](https://postfiles.pstatic.net/MjAyNTEwMDRfODIg/MDAxNzU5NTc3MTMxNDc4.XfHQlkk08vewI-4Xyu4w7QCQterl9kfYMbWJ5DT9yP4g.GZ0LG5qSC1XExaLSxyo_vXBHouOcvFKCTFlwVNV0LK4g.PNG/image.png?type=w773)
+
+```java
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] progresses, int[] speeds) {
+        List<Integer> result = new ArrayList<>();
+        
+        int n = progresses.length;
+        int[] days = new int[n];
+        
+        for (int i = 0; i < n; i++) {
+            days[i] = (int) Math.ceil((100.0 - progresses[i]) / speeds[i]);
+        }
+        
+        int maxDay = days[0]; 
+        int count = 1;     
+        
+        for (int i = 1; i < n; i++) {
+            if (days[i] <= maxDay) {
+                count++;
+            } else {
+                result.add(count);
+                count = 1;
+                maxDay = days[i];
+            }
+        }
+        
+        result.add(count);
+        
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+```
+
