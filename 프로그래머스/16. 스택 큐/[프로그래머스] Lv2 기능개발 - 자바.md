@@ -93,3 +93,42 @@ class Solution {
 }
 ```
 
+### 세번째 풀이
+
+* queue 에 남은 기능 개선 일수를 넣어 풀이하기!
+
+![img](https://postfiles.pstatic.net/MjAyNTEwMDVfMTk0/MDAxNzU5Njc1MTk4MTU2.KSVYj1OG89KRGMwT4REpgPRLGtFnqZ8BfrrEqNJRfgsg.X1S3LiyDRF7-p2BYid10bDS3mxOu7ZQpRD1odRAVriYg.PNG/image.png?type=w773)
+
+```java
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] progresses, int[] speeds) {
+        Queue<Integer> days = new LinkedList<>();
+        for (int i = 0; i < progresses.length; i++) {
+            int remain = 100 - progresses[i];
+            int day = (int) Math.ceil((double) remain / speeds[i]);
+            days.offer(day);
+        }
+
+        List<Integer> result = new ArrayList<>();
+        int front = days.poll();
+        int count = 1;
+
+        while (!days.isEmpty()) {
+            int cur = days.poll();
+            if (cur <= front) {
+                count++;
+            } else {
+                result.add(count);
+                front = cur;
+                count = 1;
+            }
+        }
+        result.add(count);
+
+        return result.stream().mapToInt(i -> i).toArray();
+    }
+}
+```
+
