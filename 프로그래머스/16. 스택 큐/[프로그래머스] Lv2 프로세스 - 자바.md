@@ -1,4 +1,4 @@
-# **소수찾기 - 자바**
+# **프로세스 - 자바**
 
 https://school.programmers.co.kr/learn/courses/30/lessons/42587
 
@@ -91,6 +91,39 @@ class Solution {
         }
         return cnt;
     }
+    
+}
+```
+
+### 세번째 풀이
+
+* **stream** 을 이용하여 높은 우선순위 뒤로 보내기!
+
+![img](https://postfiles.pstatic.net/MjAyNTEwMDVfMjY4/MDAxNzU5Njc1NTA0NjI0.rJ6ShvvUwwZu7C6y9N4Eozx6gyZWXzDYg35PzUcS8UQg.yLCd5cAnBKxWFkNacp1gGJjYBPrdniTbFLpmGILTre0g.PNG/image.png?type=w773)
+
+```java
+import java.util.*;
+
+class Solution {
+   public static int solution(int[] priorities, int location){
+        Queue<int[]> queue = new LinkedList<>(); 
+        for (int i = 0; i < priorities.length; i++)
+            queue.offer(new int[]{i, priorities[i]});
+
+        int answer = 0;
+        while (!queue.isEmpty()) {
+            int[] now = queue.poll();
+            // 지금보다 높은 우선순위 남아있다면 뒤로 보냄!
+            // stream 을 이용한 풀이!
+            if (queue.stream().anyMatch(q -> q[1] > now[1])) {
+                queue.offer(now);
+            } else {
+                answer++;
+                if (now[0] == location) return answer;
+            }
+        }
+        return answer;
+   }
     
 }
 ```
