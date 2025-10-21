@@ -7,7 +7,13 @@ https://www.acmicpc.net/problem/1753
 * **다익스트라** 알고리즘!
   * 그래프에서 시작점 > 다른 모든 정점까지의 최단 거리(최소비용)
 
+1. 시작점에서 출발
+2. 가장 짧은 거리의 노드 선택
+3. 그 노드와 견결된 인접노드들의 거리 갱신
+4. 모든 노드 처리할 때까지 반복
 
+* graph: 정점에서 거리 짧은 순 별 노드 이동
+* dist: 각 점점의 최소 거리 구하기
 
 https://postfiles.pstatic.net/MjAyNTEwMjBfNjgg/MDAxNzYwOTY0OTA5Nzgw.TJnpsCAC-fR32n9qbLTZtuuxwYnWg8B4GJZemYwK_c8g.fXovZOUUWTn1gyPmK4tHSGDzyL5Rsc3vUsqBTdFk6bQg.PNG/image.png?type=w773
 
