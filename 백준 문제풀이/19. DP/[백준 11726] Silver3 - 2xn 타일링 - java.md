@@ -4,6 +4,9 @@ https://www.acmicpc.net/problem/11726
 
 ## 내 풀이
 
+* dp 의 특성 기억하기!
+  * 이전 번호 기억
+
 ```java
 import java.util.*;
 
